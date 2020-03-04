@@ -65,10 +65,5 @@ function watchTask() {
   );
 }
 
-exports.default = series(parallel(scssTask, jsTask), cacheBustTask);
-exports.dev = series(
-  parallel(scssTask, jsTask),
-  cacheBustTask,
-  serve,
-  watchTask
-);
+exports.default = series(parallel(scssTask, jsTask), cacheBustTask, serve, watchTask );
+exports.build = series(parallel(scssTask, jsTask), cacheBustTask );
