@@ -40,6 +40,7 @@ function scssTask() {
 
 function jsTask() {
   return src([
+    "./src/js/script.js",
     files.jsPath
     //,'!' + 'includes/js/jquery.min.js', // to exclude any specific files
   ])
@@ -51,7 +52,7 @@ function jsTask() {
 // Cachebust
 function cacheBustTask() {
   var cbString = new Date().getTime();
-  return src(["public/index.html"])
+  return src([files.htmlPath])
     .pipe(replace(/cb=\d+/g, "cb=" + cbString))
     .pipe(dest("."));
 }
@@ -65,4 +66,9 @@ function watchTask() {
 }
 
 exports.default = series(parallel(scssTask, jsTask), cacheBustTask);
-exports.dev = series(parallel(scssTask, jsTask), cacheBustTask, serve, watchTask);
+exports.dev = series(
+  parallel(scssTask, jsTask),
+  cacheBustTask,
+  serve,
+  watchTask
+);
